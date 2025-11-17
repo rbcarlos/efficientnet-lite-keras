@@ -14,10 +14,8 @@ else:
 # tensorflow.python.keras is removed in 2.12
 if version.parse(tf.__version__) < version.parse("2.12"):
     from tensorflow.python.keras import backend
-    from tensorflow.python.keras.utils import layer_utils
 else:
     from tensorflow.keras import backend
-    from keras.utils import layer_utils
 
 from tensorflow.python.lib.io import file_io
 
@@ -304,12 +302,7 @@ def EfficientNetLite(
         elif pooling == "max":
             x = layers.GlobalMaxPooling2D(name="max_pool")(x)
 
-    # Ensure that the model takes into account
-    # any potential predecessors of `input_tensor`.
-    if input_tensor is not None:
-        inputs = layer_utils.get_source_inputs(input_tensor)
-    else:
-        inputs = img_input
+    inputs = img_input
 
     # Create model.
     model = tf.keras.Model(inputs, x, name=model_name)
